@@ -33,3 +33,12 @@ Routes:
 - Basic CRUD for Sequences
 - Hooking up a sequence to a Practice Log when it is created - i.e. a Log **must** be created with a Sequence ID/Name.
 - Making an Entry within a Practice Log - i.e. an entry **must** belong to a Log and contain a Pose ID/Name which was practiced
+
+
+MVP:
+- Poses and Sequences are Hard Coded in their own, contained Symbiotic relationship. For now, they will just be the Ashtanga Sequences with the poses including those sequences.
+- The primary entities which the end user will be interacting with are the Logs and Entries
+
+Post MVP:
+- Students can create custom sequences.
+- Students can enter a pose into the database if it doesn't already exist - therefore no duplicate poses are clogging up the database.

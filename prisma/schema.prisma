@@ -6,7 +6,6 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
 }
 
 datasource db {
@@ -14,11 +13,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Session {
+  id        String   @id
+  sid       String   @unique
+  data      String   
+  expiresAt   DateTime
+}
+
 
 model User {
   id            String          @id @default(cuid())
+  name String
   email         String          @unique
-  passwordHash  String
+  password  String
   practiceLogs  PracticeLog[]   // 1:M logging of sessions
   profile       Profile[]
 }
