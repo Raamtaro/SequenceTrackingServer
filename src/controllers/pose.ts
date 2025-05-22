@@ -28,6 +28,10 @@ const getPose = async (req: Request, res: Response): Promise<void> => {
         {
             where: {
                 name
+            },
+            select: {
+                id: true,
+                name: true,
             }
         }
     )
@@ -58,9 +62,8 @@ const getPoses= async (req: Request, res: Response): Promise<void> => {
 }
 
 const createPose = async (req: Request, res: Response): Promise<void> => {
-    // const client = req.user; 
+    // const client = req.user; //Leaving commented for now as I might utilize this when I start allowing users to add poses to the DB if it doesn't exist yet
     const { name, description } = req.body as PoseData;
-    
 
     if (!name) {
         res.status(400).json(
@@ -70,31 +73,6 @@ const createPose = async (req: Request, res: Response): Promise<void> => {
         )
         return;
     }
-
-    /**
-     * Delete commented block after next git commit 
-     */
-
-    // const dupe = await prisma.pose.findUnique( //I don't need to add this check because Prisma will already throw an error if I break the unique constraint rule set on the "name" field in the Pose Schema
-    //     {
-    //         where: {
-    //             name
-    //         }
-    //     }
-    // )
-
-    // if (dupe) {
-    //     res.status(400).json(
-    //         {
-    //             error: `A pose with name ${name} already exists.`
-    //         }
-    //     )
-    //     return;
-    // }
-
-
-    // const poseData: PoseData = {name};
-    // if (description) poseData.description = description //Description is optional, so only add it if it is included
 
     const newPose = await prisma.pose.create(
         {
@@ -114,11 +92,45 @@ const createPose = async (req: Request, res: Response): Promise<void> => {
 }
 
 const updatePose = async (req: Request, res: Response): Promise<void> => {
-    
+    const id = req.params.id
+    const { description } = req.body
+
+    const updatedPose = await prisma.pose.update(
+        {
+            where: {
+                id
+            },
+            data: {
+                description
+            }
+        }
+    )
+
+    res.status(200).json(
+        {
+            message: `Updated pose ${id}:`,
+            updatedPose
+        }
+    )
+
+
 }
 
 const deletePose = async (req: Request, res: Response): Promise<void> => {
+    const id = req.params.id
 
+    await prisma.pose.delete(
+        {
+            where: {
+                id
+            }
+        }
+    )
+    res.status(200).json(
+        {
+            message: `Deleted pose ${id}`
+        }
+    )
 }
 
 export default {
