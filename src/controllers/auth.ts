@@ -29,6 +29,7 @@ const signup = async(req: Request, res: Response): Promise<void> => {
                 error: `An account with ${email} already exists`
             }
         )
+        return;
     }
 
     const hashedPassword = await bcrypt.hash(password, 11)

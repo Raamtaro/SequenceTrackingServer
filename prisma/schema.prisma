@@ -16,39 +16,40 @@ datasource db {
 model Session {
   id        String   @id
   sid       String   @unique
-  data      String   
-  expiresAt   DateTime
+  data      String
+  expiresAt DateTime
 }
 
-
 model User {
-  id            String          @id @default(cuid())
-  name String
-  email         String          @unique
-  password  String
-  practiceLogs  PracticeLog[]   // 1:M logging of sessions
-  profile       Profile[]
+  id           String        @id @default(cuid())
+  name         String
+  email        String        @unique
+  password     String
+  practiceLogs PracticeLog[] // 1:M logging of sessions
+  profile      Profile[]
 }
 
 model Profile {
-  id       String @id @default(cuid())
-  user     User   @relation(fields: [userId], references: [id])
-  userId   String @unique
+  id     String @id @default(cuid())
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @unique
   // any extra profile fields…
 }
 
 model Pose {
-  id     String               @id @default(cuid())
-  name   String               @unique
-  sequences SequenceToPose[]  
-  entries   PracticeLogEntry[]
+  id          String             @id @default(cuid())
+  name        String             @unique
+  description String?
+  sequences   SequenceToPose[]
+  entries     PracticeLogEntry[]
 }
 
 model Sequence {
-  id          String               @id @default(cuid())
-  name        String               @unique
-  poses       SequenceToPose[]     
-  practiceLogs PracticeLog[]       
+  id           String           @id @default(cuid())
+  name         String           @unique
+  description  String?
+  poses        SequenceToPose[]
+  practiceLogs PracticeLog[]
 }
 
 model SequenceToPose {
@@ -56,28 +57,29 @@ model SequenceToPose {
   sequenceId String
   pose       Pose     @relation(fields: [poseId], references: [id])
   poseId     String
-  order      Int      // optional: where this pose sits in the series
+  order      Int?
+
   @@id([sequenceId, poseId])
 }
 
 model PracticeLog {
-  id             String               @id @default(cuid())
-  user           User                 @relation(fields: [userId], references: [id])
-  userId         String
-  sequence       Sequence             @relation(fields: [sequenceId], references: [id])
-  sequenceId     String
-  date           DateTime             @default(now())
-  overallRating  Int?                 // 1–10 for whole sequence
-  overallNotes   String?
-  entries        PracticeLogEntry[]   // per-pose ratings
+  id            String             @id @default(cuid())
+  user          User               @relation(fields: [userId], references: [id])
+  userId        String
+  sequence      Sequence           @relation(fields: [sequenceId], references: [id])
+  sequenceId    String
+  date          DateTime           @default(now())
+  overallRating Int? // 1–10 for whole sequence
+  overallNotes  String?
+  entries       PracticeLogEntry[] // per-pose ratings
 }
 
 model PracticeLogEntry {
-  id        String       @id @default(cuid())
-  log       PracticeLog  @relation(fields: [logId], references: [id])
-  logId     String
-  pose      Pose         @relation(fields: [poseId], references: [id])
-  poseId    String
-  rating    Int          // 1–10 for that pose
-  notes     String?
+  id     String      @id @default(cuid())
+  log    PracticeLog @relation(fields: [logId], references: [id])
+  logId  String
+  pose   Pose        @relation(fields: [poseId], references: [id])
+  poseId String
+  rating Int // 1–10 for that pose
+  notes  String?
 }

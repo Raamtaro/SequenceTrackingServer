@@ -46,6 +46,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 app.use('/auth', router.auth)
+app.use('/pose', router.pose)
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     console.error(err.stack);
