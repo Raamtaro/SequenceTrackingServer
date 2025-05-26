@@ -1,6 +1,6 @@
 import { Router } from "express";
-import passport from "passport"; //JWT protection
-import {getSequence, getSequences, createSequence, updateSequence, deleteSequence} from "../controllers/sequence";
+import passport from "passport"; 
+import {getSequence, getSequences, createSequence, updateSequence, deleteSequence, addPoseToSequence, removePoseFromSequence} from "../controllers/sequence";
 
 const router = Router();
 
@@ -13,7 +13,8 @@ router.delete('/:id', passport.authenticate('jwt', {session: false}), deleteSequ
 /**
  * Relationship Routes
  */
-
+router.post('/:sequenceId/pose', passport.authenticate('jwt', {session: false}), addPoseToSequence)
+router.delete('/:sequenceId/pose/:poseId', passport.authenticate('jwt', {session: false}), removePoseFromSequence)
 
 
 export default router;

@@ -204,7 +204,7 @@ export const removePoseFromSequence = async(req: Request<{sequenceId: string, po
         where: { sequenceId_poseId: { sequenceId, poseId } },
     })
 
-    res.status(204).json(
+    res.status(204).send(
         {
             message: `Removed pose ${poseId} from sequence ${sequenceId}. It's really sad when relationships end, please take care of yourself.`
         }
