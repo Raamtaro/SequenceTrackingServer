@@ -32,6 +32,7 @@ const getPose = async (req: Request, res: Response): Promise<void> => {
             select: {
                 id: true,
                 name: true,
+                description: true,
             }
         }
     )
@@ -48,8 +49,7 @@ const getPoses= async (req: Request, res: Response): Promise<void> => {
         {
             select: {
                 name: true,
-                description: true
-
+                id: true,
             }
         }
     )
