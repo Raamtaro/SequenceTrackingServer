@@ -57,7 +57,7 @@ model SequenceToPose {
   sequenceId String
   pose       Pose     @relation(fields: [poseId], references: [id])
   poseId     String
-  order      Int?
+  order      Int?          
 
   @@id([sequenceId, poseId])
 }
