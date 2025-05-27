@@ -19,7 +19,7 @@ const port: number = 3000;
 //Session Setup
 
 app.use(express.json())
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({ extended: true }))
 
 app.use(
     session(
@@ -29,13 +29,13 @@ app.use(
                 {
                     checkPeriod: 2 * 60 * 1000,  //ms
                     dbRecordIdIsSessionId: true,
-                    dbRecordIdFunction: undefined,                    
+                    dbRecordIdFunction: undefined,
                 }
             ),
             secret: process.env.SESSION_SECRET as string,
             resave: false,
             saveUninitialized: false,
-            cookie: {maxAge: 1000 * 60 * 60 * 24}            
+            cookie: { maxAge: 1000 * 60 * 60 * 24 }
         }
     )
 )
