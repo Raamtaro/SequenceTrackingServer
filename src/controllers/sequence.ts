@@ -42,7 +42,17 @@ export const getSequence = async (req: Request<{ id: string }>, res: Response): 
                 id
             },
             include: {
-                poses: true,
+                poses: {
+                    orderBy: { order: 'asc' },
+                    select: {
+                        order: true,
+                        pose: {
+                            select: {
+                                name: true
+                            }
+                        }
+                    }
+                },
 
             }
         }
@@ -65,6 +75,7 @@ export const getSequence = async (req: Request<{ id: string }>, res: Response): 
 }
 
 export const getSequences = async (_req: Request, res: Response): Promise<void> => {
+
     const allSequences = await prisma.sequence.findMany(
         {
             select: {
