@@ -48,6 +48,8 @@ app.use(passport.session())
 app.use('/auth', router.auth)
 app.use('/pose', router.pose)
 app.use('/sequence', router.sequence)
+app.use('/log', router.log)
+app.use('/entry', router.entry)
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     console.error(err.stack);

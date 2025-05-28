@@ -82,4 +82,5 @@ model PracticeLogEntry {
   poseId String
   rating Int // 1–10 for that pose
   notes  String?
+  order Int? // Order in the sequence, fed by the SequenceToPose model.
 }
