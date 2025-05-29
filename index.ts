@@ -5,6 +5,7 @@ import { jwtStrategy } from "./src/passport/passportJwt";
 import session from 'express-session'
 import dotenv from 'dotenv';
 import { PrismaClient } from "@prisma/client";
+import cors from 'cors';
 
 
 import router from './src/routes/'
@@ -20,6 +21,13 @@ const port: number = 3000;
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.use(
+  cors({
+    origin: process.env.CORS_ORIGIN,
+    credentials: true,
+  })
+)
+
 
 app.use(
     session(
