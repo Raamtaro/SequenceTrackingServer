@@ -102,10 +102,6 @@ const createSequences = async (): Promise<void> => {
 }
 
 
-
-
-
-
 // Main execution
 seedDatabase()
     .catch((e) => {
